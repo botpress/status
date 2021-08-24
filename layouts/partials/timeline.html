@@ -1,0 +1,38 @@
+{{ $uptimes := index . "uptime" }}
+
+<svg class="timeline" preserveAspectRatio="none" height="34" viewBox="0 0 448 34">
+{{ range $i, $sequence := (seq 90) }}
+  {{ $stdDate := now.AddDate 0 0 1 }}
+
+  {{ $uptime := index $uptimes $i }} 
+  {{ if $uptime }}
+    <rect
+      height="34"
+      width="3"
+      x="{{ mul (add $i 1) 5 }}"
+      y="0"
+      fill="#28a745"
+      class="timeline-day"
+      data-html="true"
+    ></rect>
+  {{ else }}
+    <rect
+      height="34"
+      width="3"
+      x="{{ mul (add $i 1) 5 }}"
+      y="0"
+      fill="#8da2b5"
+      class="timeline-day"
+      data-html="true"
+    ></rect>
+  {{ end }}
+{{ end }}
+</svg>
+
+<div class="timeline-footer">
+  <div class="timeline-footer-text">90 days ago</div>
+  <div class="line"></div>
+  <div class="timeline-footer-text">{{ div (math.Ceil (mul .avgUptime 1000)) 10 }}% uptime</div>
+  <div class="line"></div>
+  <div class="timeline-footer-text">Today</div>
+</div>

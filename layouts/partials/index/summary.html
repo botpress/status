@@ -1,0 +1,27 @@
+{{ $incidents := where .Site.RegularPages "Params.section" "issue" }}
+{{ $active := where $incidents "Params.resolved" "=" false }}
+
+{{ $isNotice := where $active "Params.severity" "=" "notice" }}
+{{ $isDisrupted := where $active "Params.severity" "=" "disrupted" }}
+{{ $isDown := where $active "Params.severity" "=" "down" }}
+
+<div class="summary">
+  <div class="summary-status">
+    {{ if $isDown }}
+      <strong>{{ T "isDown" }}</strong>
+      <div class="svg-icon svg-icon-16">{{ partial "status/down" }}</div>
+    {{ else }}
+    {{ if $isDisrupted }}
+      <strong>{{ T "isDisrupted" }}</strong>
+      <div class="svg-icon svg-icon-16">{{ partial "status/disrupted" }}</div>
+    {{ else }}
+    {{ if $isNotice }}
+      <strong>{{ T "isNotice" }}</strong>
+      <div class="svg-icon svg-icon-16">{{ partial "status/notice" }}</div>
+    {{ else }}
+      <strong>{{ T "isOk" }}</strong>
+      <div class="svg-icon svg-icon-16">{{ partial "status/ok" }}</div>
+    {{ end }}{{ end }}{{ end }}
+  </div>
+  <div class="summary__date clicky float-right relative-time" onclick="location.reload()" data-time-prefix="{{ T "lastChecked" }} "></div>
+</div>
