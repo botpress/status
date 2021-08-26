@@ -13,6 +13,6 @@ phases:
     commands:
       - hugo version
       - hugo -v
-  deploy:
+  post_build:
     commands:
       - aws s3 sync --delete public s3://BUCKETNAME --cache-control max-age=3600
