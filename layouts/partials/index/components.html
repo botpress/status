@@ -57,8 +57,9 @@
             </a>
             {{ with .description }}
               <span class="tooltip tooltip--small">
-                &nbsp; <span class="faded">(?)</span>
-
+                <div class="svg-icon svg-icon-16">
+                  {{ partial "status/question" }}
+                </div>
                 <span class="tooltip__text">
                   {{ . }}
                 </span>
@@ -92,13 +93,16 @@
             {{ end }}
           </div>
 
-          {{ if (and $.Site.Data.metrics (index $.Site.Data.metrics.uptime .name)) }}
+          {{- if $.Site.Data.metrics }}
+          {{- $uptime := (index $.Site.Data.metrics.uptime .name) }}
+          {{- if $uptime }}
           <div>
-            {{ partial "timeline" (index $.Site.Data.metrics.uptime .name) }}
+            {{ partial "timeline" $uptime }}
           </div>
-          {{ end }}
+          {{- end }}
+          {{- end }}
         </div>
-      {{ end }}
+      {{- end }}
       </div> 
 
       <!--

@@ -1,21 +1,30 @@
 {{ $uptimes := index . "uptime" }}
 
 <svg class="timeline" preserveAspectRatio="none" height="34" viewBox="0 0 448 34">
-{{ range $i, $sequence := (seq 90) }}
-  {{ $stdDate := now.AddDate 0 0 1 }}
-
-  {{ $uptime := index $uptimes $i }} 
-  {{ if $uptime }}
+{{- range $i, $sequence := (seq 90) }}
+  {{- $date := now.AddDate 0 0 (int (add -89 $i)) }}
+  {{- $date = printf "%sT04:00:00.000Z" ($date.Format "2006-01-02") }}
+  {{- $uptimeQuery := where $uptimes "time" $date }} 
+  {{- if and $uptimeQuery (eq (len $uptimeQuery) 1) }}
+    {{ $uptime := index $uptimeQuery 0 }}
     <rect
       height="34"
       width="3"
       x="{{ mul (add $i 1) 5 }}"
       y="0"
+      {{- if (eq $uptime.value 1.0) }}
       fill="#28a745"
+      {{- else if (eq $uptime.value 0.0) }}
+      fill="#d73a49"
+      {{- else }}
+      fill="#f66a0a"
+      {{- end }}
       class="timeline-day"
+      data-value="{{ print $uptime.value }}"
+      data-date="{{ print $date }}"
       data-html="true"
     ></rect>
-  {{ else }}
+  {{- else }}
     <rect
       height="34"
       width="3"
@@ -23,10 +32,11 @@
       y="0"
       fill="#8da2b5"
       class="timeline-day"
+      data-date="{{ print $date }}"
       data-html="true"
     ></rect>
-  {{ end }}
-{{ end }}
+  {{- end }}
+{{- end }}
 </svg>
 
 <div class="timeline-footer">

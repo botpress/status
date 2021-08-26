@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - apt-get update
+      - echo Installing hugo
+      - curl -L -o hugo.deb https://github.com/gohugoio/hugo/releases/download/v0.87.0/hugo_0.87.0_Linux-64bit.deb
+      - dpkg -i hugo.deb
+  build:
+    commands:
+      - hugo -v
