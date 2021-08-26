@@ -11,6 +11,7 @@ phases:
       - dpkg -i hugo.deb
   build:
     commands:
+      - hugo version
       - hugo -v
   deploy:
     commands:
