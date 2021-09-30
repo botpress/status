@@ -93,8 +93,8 @@
             {{ end }}
           </div>
 
-          {{- if $.Site.Data.metrics }}
-          {{- $uptime := (index $.Site.Data.metrics.uptime .name) }}
+          {{- if $.Site.Data.uptimes }}
+          {{- $uptime := (index $.Site.Data.uptimes .name) }}
           {{- if $uptime }}
           <div>
             {{ partial "timeline" $uptime }}
