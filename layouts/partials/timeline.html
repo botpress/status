@@ -3,7 +3,7 @@
 <svg class="timeline" preserveAspectRatio="none" height="34" viewBox="0 0 448 34">
 {{- range $i, $sequence := (seq 90) }}
   {{- $date := now.AddDate 0 0 (int (add -89 $i)) }}
-  {{- $date = printf "%sT04:00:00.000Z" ($date.Format "2006-01-02") }}
+  {{- $date = printf "%sT00:00:00.000Z" ($date.Format "2006-01-02") }}
   {{- $uptimeQuery := where $uptimes "time" $date }} 
   {{- if and $uptimeQuery (eq (len $uptimeQuery) 1) }}
     {{ $uptime := index $uptimeQuery 0 }}
