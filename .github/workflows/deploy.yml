@@ -25,6 +25,7 @@ jobs:
       - name: copy uptimes
         shell: bash
         run: aws s3 cp s3://${{ secrets.AWS_UPTIME_BUCKET }}/${{ secrets.AWS_UPTIME_KEY }} ./data/uptimes.json
+      - run: hugo new -k uptime ./content/issues/_uptime.md
       - run: hugo --minify
       - uses: actions/checkout@v2.1.0
         with:

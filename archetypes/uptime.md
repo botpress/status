@@ -1,11 +1,12 @@
-{{- if .Site.Data.metrics }}
+{{- if .Site.Data.uptimes }}
 {{- $disruptedServices := slice }}
-{{- range $key, $uptimes := .Site.Data.metrics.uptime }}
-    {{- if (ne $uptimes.state "ok") }}
-        {{- $disruptedServices = $disruptedServices | append $uptimes.name }}
+{{- range $key, $system := .Site.Params.systems }}
+    {{- $uptime := index $.Site.Data.uptimes $system.name }}
+    {{- if and $uptime (ne $uptime.state "ok") }}
+        {{- $disruptedServices = $disruptedServices | append $uptime.name }}
     {{- end }}
 {{- end }}
-{{- if $disruptedServices }}
+{{- if $disruptedServices -}}
 ---
 title: Monitoring Disruption Detected
 date: {{ now.UTC.Format "2006-01-02T15:04:05" }}
