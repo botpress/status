@@ -1,4 +1,9 @@
-{{ $uptimes := index . "uptime" }}
+{{- $avgUptime := default 1 .avgUptime }}
+{{- $uptimes := slice }}
+
+{{- if . }}
+  {{- $uptimes := index . "uptime" }}
+{{- end }}
 
 <svg class="timeline" preserveAspectRatio="none" height="34" viewBox="0 0 448 34">
 {{- range $i, $sequence := (seq 90) }}
@@ -30,7 +35,7 @@
       width="3"
       x="{{ mul (add $i 1) 5 }}"
       y="0"
-      fill="#8da2b5"
+      fill="#28a745"
       class="timeline-day"
       data-date="{{ print $date }}"
       data-html="true"
@@ -42,7 +47,7 @@
 <div class="timeline-footer">
   <div class="timeline-footer-text">90 days ago</div>
   <div class="line"></div>
-  <div class="timeline-footer-text">{{ div (math.Ceil (mul .avgUptime 1000)) 10 }}% uptime</div>
+  <div class="timeline-footer-text">{{ div (math.Ceil (mul $avgUptime 1000)) 10 }}% uptime</div>
   <div class="line"></div>
   <div class="timeline-footer-text">Today</div>
 </div>
